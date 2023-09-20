@@ -1,0 +1,7 @@
+<form [formGroup]="form" class="form">
+  <ng-container *ngFor="let control of controls | keyvalue">
+    <input [placeholder]="control.value" [formControlName]="control.key" class="input">
+  </ng-container>
+  <button (click)="click()" class="button">{{ submitText }}</button>
+  <button [routerLink]="link" class="link">{{ linkText }}</button>
+</form>
