@@ -1,7 +1,7 @@
 <app-background-form>
   <app-title px="50" color="white">Регистрация</app-title>
   <app-form link="/login" linkText="Вход" [controls]="createAccountDto" submitText="Зарегистрироваться" (submitButton)="registration($event)"></app-form>
-  <ng-container *ngFor="let error of authService.errors">
+  <ng-container *ngFor="let error of authService.errors" ngProjectAs="[errors]">
     <app-error>{{ error }}</app-error>
   </ng-container>
 </app-background-form>

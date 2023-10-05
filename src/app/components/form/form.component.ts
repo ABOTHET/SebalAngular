@@ -1,5 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormControl, FormGroup} from "@angular/forms";
+import {AuthService} from "../../services/auth/auth.service";
 
 @Component({
   selector: 'app-form',
@@ -7,6 +8,9 @@ import {FormControl, FormGroup} from "@angular/forms";
   styleUrls: ['./form.component.css']
 })
 export class FormComponent implements OnInit {
+
+  constructor(public authService: AuthService) {
+  }
 
   form: FormGroup = new FormGroup({});
   @Input() controls = {};

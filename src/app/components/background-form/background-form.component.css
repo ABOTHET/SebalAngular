@@ -49,3 +49,20 @@
   font-size: 0.7em;
 }
 
+.errors {
+  color: #690303;
+  position: absolute;
+  font-family: "Inter", serif;
+  font-weight: 600;
+  font-size: 14px;
+  margin-top: 36em;
+  row-gap: 2px;
+  display: flex;
+  flex-direction: column;
+  animation: ani 1s forwards;
+}
+
+@keyframes ani {
+  0% {opacity: 0;}
+  100% {opacity: 1;}
+}

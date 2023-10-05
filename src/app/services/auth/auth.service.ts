@@ -20,7 +20,11 @@ export class AuthService {
   private handleError(error: HttpErrorResponse) {
     this.errors = [];
     if (error.error.message) {
-      this.errors = error.error.message;
+      if (!Array.isArray(error.error.message)) {
+        this.errors.push(error.error.message);
+      } else {
+        this.errors = error.error.message;
+      }
     }
     return throwError(() => error);
   }
@@ -40,7 +44,10 @@ export class AuthService {
   async registration(createAccountDto: CreateAccountDto) {
     const url: string = env.url + "/accounts";
     const res: CreateAccountResult = await firstValueFrom<CreateAccountResult>(this.http
-      .post<CreateAccountResult>(url, createAccountDto, {withCredentials: true}));
+      .post<CreateAccountResult>(url, createAccountDto, {withCredentials: true})
+      .pipe(
+        catchError(this.handleError.bind(this))
+      ));
     localStorage.setItem("account_id", res.id.toString());
     localStorage.setItem("account_email", res.email);
     localStorage.setItem("access_token", res.access_token);
@@ -53,11 +60,9 @@ export class AuthService {
     localStorage.clear();
   }
 
-  async refresh() {
-    const url: string = env.url + "auth/refresh";
-    const res: AccessTokenResult = await firstValueFrom<AccessTokenResult>(this.http
-      .post<AccessTokenResult>(url, {}, {withCredentials: true}));
-    return res;
+  refresh() {
+    const url: string = env.url + "/auth/refresh";
+    return this.http.post<AccessTokenResult>(url, {}, {withCredentials: true});
   }
 
 }
